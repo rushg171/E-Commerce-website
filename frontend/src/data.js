@@ -1,0 +1,51 @@
+export const sofas = [
+  {
+    id: 1,
+    model: 'Sleepyhead Kiki Fabric 2 Seater Sofa',
+    price: 11159,
+    img_path: 'imgs/1.webp',
+    seating: 3,
+  },
+  {
+    id: 2,
+    model: 'Sleepyhead Kiki Fabric 2 Seater Sofa',
+    price: 11159,
+    img_path: 'imgs/2.webp',
+    seating: 3,
+  },
+  {
+    id: 3,
+    model: 'Limraz furniture Fabric 3 Seater Sofa',
+    price: 8999,
+    img_path: 'imgs/3.webp',
+    seating: 3,
+  },
+  {
+    id: 4,
+    model: 'Limraz furniture Fabric 3 Seater Sofa',
+    price: 8995,
+    img_path: 'imgs/4.webp',
+    seating: 3,
+  },
+  {
+    id: 5,
+    model: 'BROWNIE Fabric 3 Seater Sofa',
+    price: 7999,
+    img_path: 'imgs/5.webp',
+    seating: 3,
+  },
+  {
+    id: 6,
+    model: 'Trevi Bliss Fabric 6 Seater Sofa',
+    price: 19999,
+    img_path: 'imgs/6.webp',
+    seating: 6,
+  },
+  {
+    id: 7,
+    model: 'Bharat Lifestyle Fabric 3 + 1 + 1 Sofa Set',
+    price: 13659,
+    img_path: 'imgs/7.webp',
+    seating: 6,
+  },
+];
