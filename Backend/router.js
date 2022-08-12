@@ -8,5 +8,6 @@ router.all('/sofa', controller.sofa);
 router.all('/signup', auth.signup);
 router.all('/signin', auth.signin);
 router.all('/changepassword', auth.changePassword);
+router.all('/viewcart', controller.cart);
 
 module.exports = router;
