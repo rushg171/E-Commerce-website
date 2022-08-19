@@ -2,6 +2,14 @@ const bcrypt = require('bcrypt');
 const { pool } = require('./connector');
 const saltRounds = 10;
 
+function sqlError(error, res, connection) {
+  if (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: error.message });
+    connection.release();
+  }
+}
+
 exports.signup = async (req, res, next) => {
   try {
     const { username, password } = req.body;
@@ -15,19 +23,9 @@ exports.signup = async (req, res, next) => {
     const q = `INSERT INTO user_data (username, hashValue) VALUES ('${username}', '${hash}');`;
 
     pool.getConnection((mysqlError, connection) => {
-      if (mysqlError) {
-        console.error(mysqlError);
-        res.status(500).json({ success: false, error: mysqlError.message });
-        connection.release();
-        return;
-      }
+      if (mysqlError) return sqlError(mysqlError, res, connection);
       connection.query(q, (qerror, results, fields) => {
-        if (qerror) {
-          console.error(qerror);
-          res.status(500).json({ success: false, error: qerror.code });
-          connection.release();
-          return;
-        }
+        if (qerror) return sqlError(qerror, res, connection);
         if (results.insertId) {
           res.status(200).send({
             success: true,
@@ -57,19 +55,9 @@ exports.signin = async (req, res, next) => {
     const q = `SELECT hashValue FROM user_data WHERE username = '${username}'`;
 
     pool.getConnection((mysqlError, connection) => {
-      if (mysqlError) {
-        console.error(mysqlError);
-        res.status(500).json({ success: false, error: mysqlError.message });
-        connection.release();
-        return;
-      }
+      if (mysqlError) return sqlError(mysqlError, res, connection);
       connection.query(q, async (qerror, results, fields) => {
-        if (qerror) {
-          console.error(qerror);
-          res.status(500).json({ success: false, error: qerror.code });
-          connection.release();
-          return;
-        }
+        if (qerror) return sqlError(qerror, res, connection);
         await bcrypt
           .compare(password, results[0].hashValue)
           .then((matched) => {
@@ -105,19 +93,9 @@ exports.changePassword = async (req, res, next) => {
     }
     const q = `SELECT hashValue FROM user_data WHERE username = '${username}'`;
     pool.getConnection((mysqlError, connection) => {
-      if (mysqlError) {
-        console.error(mysqlError);
-        res.status(500).json({ success: false, error: mysqlError.message });
-        connection.release();
-        return;
-      }
+      if (mysqlError) return sqlError(mysqlError, res, connection);
       connection.query(q, async (qerror, results, fields) => {
-        if (qerror) {
-          console.error(qerror);
-          res.status(500).json({ success: false, error: qerror.code });
-          connection.release();
-          return;
-        }
+        if (qerror) return sqlError(qerror, res, connection);
         bcrypt
           .compare(password, results[0].hashValue)
           .then((matched) => {

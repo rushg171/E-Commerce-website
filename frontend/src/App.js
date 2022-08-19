@@ -3,13 +3,14 @@ import { Collection } from './components/Collection';
 import { CartContainer } from './components/CartContainer';
 
 function App() {
+  localStorage.setItem('UserID', 5);
+  localStorage.setItem('Name', 'Saturn King');
   return (
     <Router>
       <div className="ms-10">
         <Routes>
           <Route exact path="/" element={<Collection />} />
           <Route
-            exact
             path="/viewcart"
             element={<CartContainer class="justify-content-center" />}
           />
